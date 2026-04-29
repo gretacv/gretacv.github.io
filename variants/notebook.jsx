@@ -64,7 +64,7 @@ function NBTape({ rotate = -3, left = '50%', top = -12, width = 120, color = 'rg
 
 function NBSpecimenTag() {
   return (
-    <div style={{ position: 'relative', width: 380, transform: 'rotate(-2deg)' }}>
+    <div className="nb-specimen" style={{ position: 'relative', width: 380, transform: 'rotate(-2deg)' }}>
       <NBTape left="22%" top={-10} rotate={-8} width={90} />
       <NBTape left="78%" top={-10} rotate={6} width={90} color="rgba(180,140,80,0.5)" />
       <div style={{
@@ -104,7 +104,7 @@ function NBSpecimenTag() {
 function NBHero() {
   const g = window.greta;
   return (
-    <section style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 56, alignItems: 'center', marginBottom: 72 }}>
+    <section className="nb-hero" style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 56, alignItems: 'center', marginBottom: 72 }}>
       <div>
         <div style={{ ...nbStyles.mono, fontSize: 11, letterSpacing: '.2em', color: nbPalette.muted, marginBottom: 18 }}>
           ☉ FIELD NOTEBOOK · Vol. XIV · Personal edition
@@ -117,14 +117,14 @@ function NBHero() {
         }}>
           Hi, I’m <em style={{ fontStyle: 'italic', fontWeight: 400, color: nbPalette.accent }}>Greta.</em>
           <br/>
-          <span style={{ fontSize: 44, color: nbPalette.inkSoft, fontWeight: 300 }}>
+          <span className="nb-subhead" style={{ fontSize: 44, color: nbPalette.inkSoft, fontWeight: 300 }}>
             Ecologist who got <span style={{ textDecoration: 'line-through', color: nbPalette.muted }}>distracted</span> curious.
           </span>
         </h1>
         <p style={{ fontSize: 20, lineHeight: 1.55, color: nbPalette.inkSoft, maxWidth: 560, margin: '0 0 28px' }}>
           {g.blurb}
         </p>
-        <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
+        <div className="nb-cta-row" style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
           <a href={g.github} style={{
             ...nbStyles.mono, fontSize: 13, fontWeight: 600, letterSpacing: '.04em',
             background: nbPalette.ink, color: nbPalette.paper,
@@ -139,7 +139,7 @@ function NBHero() {
           <span style={{ ...nbStyles.mono, fontSize: 11, color: nbPalette.muted }}>replies within one rainfall event</span>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 20 }}>
+      <div className="nb-specimen-wrap" style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 20 }}>
         <NBSpecimenTag />
       </div>
     </section>
@@ -149,8 +149,8 @@ function NBHero() {
 function NBTrailStop({ stop, idx, total }) {
   const isLast = idx === total - 1;
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 28, position: 'relative' }}>
-      <div style={{ position: 'relative' }}>
+    <div className="nb-stop" style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 28, position: 'relative' }}>
+      <div className="nb-stop-meta" style={{ position: 'relative' }}>
         <div style={{
           ...nbStyles.mono, fontSize: 10, letterSpacing: '.18em',
           color: nbPalette.muted, textAlign: 'right', paddingTop: 4,
@@ -160,7 +160,7 @@ function NBTrailStop({ stop, idx, total }) {
           textAlign: 'right', marginTop: 4,
         }}>{stop.year}</div>
       </div>
-      <div style={{ position: 'relative', paddingBottom: isLast ? 0 : 56, paddingLeft: 36 }}>
+      <div className="nb-stop-body" style={{ position: 'relative', paddingBottom: isLast ? 0 : 56, paddingLeft: 36 }}>
         {/* trail spine */}
         <div style={{
           position: 'absolute', left: 0, top: 0, bottom: 0, width: 2,
@@ -216,10 +216,10 @@ function NBTrail() {
 
 function NBSectionHead({ kicker, title, note }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'baseline', gap: 18, borderBottom: `1px solid ${nbPalette.rule}`, paddingBottom: 12 }}>
+    <div className="nb-section-head" style={{ display: 'flex', alignItems: 'baseline', gap: 18, borderBottom: `1px solid ${nbPalette.rule}`, paddingBottom: 12 }}>
       <div style={{ ...nbStyles.mono, fontSize: 11, letterSpacing: '.2em', color: nbPalette.accent, textTransform: 'uppercase' }}>{kicker}</div>
       <h2 style={{ fontFamily: 'Fraunces, serif', fontWeight: 300, fontSize: 44, margin: 0, letterSpacing: '-0.02em' }}>{title}</h2>
-      {note && <div style={{ ...nbStyles.mono, fontSize: 11, color: nbPalette.muted, fontStyle: 'italic', marginLeft: 'auto' }}>— {note}</div>}
+      {note && <div className="nb-note" style={{ ...nbStyles.mono, fontSize: 11, color: nbPalette.muted, fontStyle: 'italic', marginLeft: 'auto' }}>— {note}</div>}
     </div>
   );
 }
@@ -229,7 +229,7 @@ function NBCarcem() {
   return (
     <section style={{ marginBottom: 72 }}>
       <NBSectionHead kicker="Chapter II" title="Side quest · CARCEM" note="weekend cartography, 18th-century flavour" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1.1fr .9fr', gap: 32, marginTop: 32 }}>
+      <div className="nb-carcem-grid" style={{ display: 'grid', gridTemplateColumns: '1.1fr .9fr', gap: 32, marginTop: 32 }}>
         <div>
           <div style={{ ...nbStyles.mono, fontSize: 12, color: nbPalette.accent, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 10 }}>
             {c.tagline}
@@ -299,17 +299,17 @@ function NBTalks() {
       <NBSectionHead kicker="Chapter III" title="Things said, out loud" note="oral communications" />
       <div style={{ marginTop: 20 }}>
         {g.talks.map((t, i) => (
-          <a key={i} href={t.url} style={{
+          <a key={i} href={t.url} className="nb-talk" style={{
             display: 'grid', gridTemplateColumns: '80px 1fr auto', gap: 20,
             padding: '18px 0', borderBottom: `1px dashed ${nbPalette.rule}`,
             textDecoration: 'none', color: 'inherit', alignItems: 'baseline',
           }}>
             <div style={{ ...nbStyles.mono, fontSize: 12, color: nbPalette.accent, letterSpacing: '.1em' }}>{t.year}</div>
             <div>
-              <div style={{ fontFamily: 'Fraunces, serif', fontSize: 22, fontWeight: 400, letterSpacing: '-0.01em' }}>{t.title}</div>
+              <div className="nb-talk-title" style={{ fontFamily: 'Fraunces, serif', fontSize: 22, fontWeight: 400, letterSpacing: '-0.01em' }}>{t.title}</div>
               <div style={{ ...nbStyles.mono, fontSize: 12, color: nbPalette.muted, marginTop: 4 }}>{t.venue} · {t.co}</div>
             </div>
-            <div style={{ ...nbStyles.mono, fontSize: 12, color: nbPalette.ink }}>watch ↗</div>
+            <div className="nb-talk-watch" style={{ ...nbStyles.mono, fontSize: 12, color: nbPalette.ink }}>watch ↗</div>
           </a>
         ))}
         <div style={{ ...nbStyles.mono, fontSize: 12, color: nbPalette.muted, marginTop: 16, fontStyle: 'italic' }}>
@@ -325,7 +325,7 @@ function NBNow() {
   return (
     <section style={{ marginBottom: 72, position: 'relative' }}>
       <NBSectionHead kicker="Chapter IV" title="Currently" note="updated whenever I remember" />
-      <ul style={{ listStyle: 'none', padding: 0, margin: '28px 0 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px 32px' }}>
+      <ul className="nb-now-grid" style={{ listStyle: 'none', padding: 0, margin: '28px 0 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px 32px' }}>
         {g.now.map((line, i) => (
           <li key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
             <span style={{ ...nbStyles.mono, fontSize: 12, color: nbPalette.accent, marginTop: 4 }}>§{i+1}</span>
@@ -341,7 +341,7 @@ function NBContact() {
   const g = window.greta;
   return (
     <section style={{ marginBottom: 40 }}>
-      <div style={{
+      <div className="nb-contact" style={{
         background: '#fbf6e7',
         border: `1px solid ${nbPalette.rule}`,
         padding: '36px 40px',
@@ -381,17 +381,17 @@ function NBContact() {
 function NotebookSite() {
   const [hovered, setHovered] = React.useState(false);
   return (
-    <div className="artboard-root" style={nbStyles.root}>
+    <div className="artboard-root nb-root" style={nbStyles.root}>
       {/* punch holes */}
-      <div style={{ position: 'absolute', left: 18, top: 0, bottom: 0, width: 22, display: 'flex', flexDirection: 'column', justifyContent: 'space-around', padding: '60px 0' }}>
+      <div className="nb-holes" style={{ position: 'absolute', left: 18, top: 0, bottom: 0, width: 22, display: 'flex', flexDirection: 'column', justifyContent: 'space-around', padding: '60px 0' }}>
         {Array.from({length: 12}).map((_, i) => (
           <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: 'rgba(0,0,0,.08)', boxShadow: 'inset 0 1px 2px rgba(0,0,0,.2)' }}/>
         ))}
       </div>
       {/* red margin line */}
-      <div style={{ position: 'absolute', left: 96, top: 0, bottom: 0, width: 1, background: 'rgba(165,58,42,.35)' }} />
+      <div className="nb-margin-line" style={{ position: 'absolute', left: 96, top: 0, bottom: 0, width: 1, background: 'rgba(165,58,42,.35)' }} />
 
-      <div style={{ maxWidth: 1040, marginLeft: 60 }}>
+      <div className="nb-content" style={{ maxWidth: 1040, marginLeft: 60 }}>
         <NBHero />
         <NBTrail />
         <NBCarcem />
