@@ -70,7 +70,7 @@ function TMWindow({ title, children, style }) {
           {title}
         </div>
       </div>
-      <div style={{ padding: '22px 26px' }}>{children}</div>
+      <div className="tm-window-body" style={{ padding: '22px 26px' }}>{children}</div>
     </div>
   );
 }
@@ -93,7 +93,7 @@ function TMHero() {
 
       <TMPrompt>cat about.md</TMPrompt>
       <div style={{ paddingLeft: 14, marginBottom: 18 }}>
-        <div style={{ fontSize: 36, lineHeight: 1.1, color: tmPalette.text, fontWeight: 500, letterSpacing: '-.01em', marginBottom: 10 }}>
+        <div className="tm-hero-h1" style={{ fontSize: 36, lineHeight: 1.1, color: tmPalette.text, fontWeight: 500, letterSpacing: '-.01em', marginBottom: 10 }}>
           # Hi — I’m Greta.
         </div>
         <div style={{ color: tmPalette.dim, fontSize: 15, lineHeight: 1.55, maxWidth: 760 }}>
@@ -102,7 +102,7 @@ function TMHero() {
       </div>
 
       <TMPrompt>./status --verbose</TMPrompt>
-      <div style={{ paddingLeft: 14, marginBottom: 18, fontSize: 13 }}>
+      <div className="tm-status" style={{ paddingLeft: 14, marginBottom: 18, fontSize: 13 }}>
         <div><span style={{ color: tmPalette.cyan }}>role</span>          <span style={{ color: tmPalette.text }}>Lead Ecologist @ Versant</span></div>
         <div><span style={{ color: tmPalette.cyan }}>caffeine</span>      <span style={{ color: tmPalette.green }}>OK</span> <span style={{ color: tmPalette.dim }}>(78%)</span></div>
         <div><span style={{ color: tmPalette.cyan }}>existential</span>   <span style={{ color: tmPalette.yellow }}>WARN</span> <span style={{ color: tmPalette.dim }}>(manageable)</span></div>
@@ -136,7 +136,7 @@ function TMCareer() {
         {g.stops.map((s, i) => {
           const isLast = i === g.stops.length - 1;
           return (
-            <div key={s.key} style={{ display: 'grid', gridTemplateColumns: '50px 1fr', gap: 14, position: 'relative', paddingBottom: isLast ? 0 : 22 }}>
+            <div key={s.key} className="tm-career-row" style={{ display: 'grid', gridTemplateColumns: '50px 1fr', gap: 14, position: 'relative', paddingBottom: isLast ? 0 : 22 }}>
               {!isLast && (
                 <div style={{
                   position: 'absolute', left: 24, top: 28, bottom: 4, width: 1,
@@ -210,7 +210,7 @@ function TMTalks() {
       <TMSectionLabel cmd="ls talks/ | head" />
       <TMWindow title="talks/">
         {g.talks.map((t, i) => (
-          <a key={i} href={t.url} style={{
+          <a key={i} href={t.url} className="tm-talk" style={{
             display: 'grid', gridTemplateColumns: '60px 1fr auto', gap: 14,
             padding: '12px 0', borderBottom: i < g.talks.length - 1 ? `1px solid ${tmPalette.rule}` : 'none',
             textDecoration: 'none', color: 'inherit',
@@ -220,7 +220,7 @@ function TMTalks() {
               <div style={{ color: tmPalette.text, fontSize: 14 }}>{t.title}</div>
               <div style={{ color: tmPalette.dim, fontSize: 12 }}>{t.venue} · {t.co}</div>
             </span>
-            <span style={{ color: tmPalette.green, fontSize: 12, alignSelf: 'center' }}>▶ play</span>
+            <span className="tm-talk-play" style={{ color: tmPalette.green, fontSize: 12, alignSelf: 'center' }}>▶ play</span>
           </a>
         ))}
         <div style={{ color: tmPalette.muted, fontSize: 12, marginTop: 12, fontStyle: 'italic' }}>
@@ -238,9 +238,9 @@ function TMNow() {
       <TMSectionLabel cmd="tail -f now.log" />
       <TMWindow title="now.log">
         {g.now.map((line, i) => (
-          <div key={i} style={{ display: 'grid', gridTemplateColumns: '92px 70px 1fr', gap: 12, padding: '6px 0' }}>
+          <div key={i} className="tm-now-row" style={{ display: 'grid', gridTemplateColumns: '92px 70px 1fr', gap: 12, padding: '6px 0' }}>
             <span style={{ color: tmPalette.muted, fontSize: 12 }}>2026-04-{(20+i).toString().padStart(2,'0')}</span>
-            <span style={{ color: tmPalette.cyan, fontSize: 12 }}>[INFO]</span>
+            <span className="tm-now-tag" style={{ color: tmPalette.cyan, fontSize: 12 }}>[INFO]</span>
             <span style={{ color: tmPalette.text, fontSize: 13 }}>{line}</span>
           </div>
         ))}
@@ -258,7 +258,7 @@ function TMContact() {
         <div style={{ marginBottom: 14, color: tmPalette.text, fontSize: 14 }}>
           <span style={{ color: tmPalette.green }}>✓</span> handshake successful — let's talk.
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <div className="tm-contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
           <a href={`mailto:${g.email}`} style={{
             padding: '14px 16px', border: `1px solid ${tmPalette.green}`,
             color: tmPalette.green, textDecoration: 'none', borderRadius: 6,
@@ -309,7 +309,7 @@ function TMEgg() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
   if (!shown) return (
-    <div style={{
+    <div className="tm-egg-hint" style={{
       position: 'absolute', right: 24, bottom: 16,
       color: tmPalette.muted, fontSize: 11, letterSpacing: '.1em',
     }}>
@@ -334,7 +334,7 @@ function TMEgg() {
 
 function TerminalSite() {
   return (
-    <div className="artboard-root" style={tmStyles.root}>
+    <div className="artboard-root tm-root" style={tmStyles.root}>
       <div style={{ maxWidth: 980, margin: '0 auto' }}>
         <TMHero />
         <TMCareer />
