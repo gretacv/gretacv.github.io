@@ -47,6 +47,71 @@
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: none; }
   }
+
+  /* ───────────────────────────────────────────────────────────
+     MOBILE OVERRIDES — re-flow inline-styled variants below 720px.
+     Inline styles are stronger than class rules, so we use !important
+     here and only here. Targets are class-tagged in the variant files.
+     ─────────────────────────────────────────────────────────── */
+  @media (max-width: 720px) {
+    /* Smaller toggle, tucked tighter */
+    .mode-toggle { width: 38px !important; height: 38px !important; right: 12px !important; top: 12px !important; }
+    .mode-toggle .tip { display: none !important; }
+
+    /* Notebook root: shrink margins and chrome */
+    .nb-root { padding: 28px 18px 56px !important; }
+    .nb-root .nb-margin-line, .nb-root .nb-holes { display: none !important; }
+    .nb-root .nb-content { margin-left: 0 !important; max-width: 100% !important; }
+
+    /* Notebook hero: stack columns */
+    .nb-hero { grid-template-columns: 1fr !important; gap: 28px !important; margin-bottom: 48px !important; }
+    .nb-hero h1 { font-size: 48px !important; line-height: 1.0 !important; }
+    .nb-hero .nb-subhead { font-size: 24px !important; }
+    .nb-hero p { font-size: 17px !important; }
+    .nb-hero .nb-specimen { width: 100% !important; max-width: 340px !important; margin: 0 auto !important; transform: rotate(-1.5deg) !important; }
+    .nb-hero .nb-cta-row { flex-wrap: wrap !important; gap: 10px !important; }
+
+    /* Notebook section heads — wrap, smaller titles */
+    .nb-section-head { flex-wrap: wrap !important; gap: 8px !important; }
+    .nb-section-head h2 { font-size: 30px !important; }
+    .nb-section-head .nb-note { margin-left: 0 !important; width: 100% !important; }
+
+    /* Notebook trail stops: stack the year-rail above the card */
+    .nb-stop { grid-template-columns: 1fr !important; gap: 8px !important; padding-bottom: 36px !important; }
+    .nb-stop .nb-stop-meta { text-align: left !important; display: flex !important; gap: 12px !important; align-items: baseline !important; padding-top: 0 !important; }
+    .nb-stop .nb-stop-meta div { text-align: left !important; }
+    .nb-stop .nb-stop-body { padding-left: 22px !important; }
+    .nb-stop .nb-stop-body h3 { font-size: 22px !important; }
+    .nb-stop .nb-stop-body p { font-size: 15px !important; }
+
+    /* CARCEM — single column */
+    .nb-carcem-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+
+    /* Talks list */
+    .nb-talk { grid-template-columns: 60px 1fr !important; }
+    .nb-talk .nb-talk-watch { display: none !important; }
+    .nb-talk .nb-talk-title { font-size: 18px !important; }
+
+    /* Now grid */
+    .nb-now-grid { grid-template-columns: 1fr !important; }
+
+    /* Contact */
+    .nb-contact { grid-template-columns: 1fr !important; padding: 24px 20px !important; }
+    .nb-contact h2 { font-size: 26px !important; }
+
+    /* ── Terminal ── */
+    .tm-root { padding: 24px 14px 48px !important; font-size: 13px !important; }
+    .tm-window-body { padding: 16px 14px !important; }
+    .tm-hero-h1 { font-size: 26px !important; }
+    .tm-status > div { font-size: 12px !important; }
+    .tm-talk { grid-template-columns: 50px 1fr !important; }
+    .tm-talk .tm-talk-play { display: none !important; }
+    .tm-now-row { grid-template-columns: 70px 1fr !important; }
+    .tm-now-row .tm-now-tag { display: none !important; }
+    .tm-contact-grid { grid-template-columns: 1fr !important; }
+    .tm-career-row { grid-template-columns: 40px 1fr !important; gap: 10px !important; }
+    .tm-egg-hint { right: 12px !important; bottom: 8px !important; font-size: 10px !important; }
+  }
 </style>
 </head>
 <body>
