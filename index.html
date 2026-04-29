@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Greta C. Vega</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&family=Inter:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; min-height: 100%; background: #f4ecd8; }
+  body { font-family: Inter, system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  *::selection { background: rgba(201,100,66,.25); }
+
+  /* page-level scroll, not artboard-level */
+  .page-root { width: 100%; min-height: 100vh; position: relative; }
+
+  /* The </> mode toggle */
+  .mode-toggle {
+    position: fixed; right: 20px; top: 20px; z-index: 100;
+    width: 44px; height: 44px; border-radius: 12px;
+    border: 1.5px solid currentColor; background: rgba(255,255,255,.6);
+    cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+    color: #2a2418; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: transform .25s cubic-bezier(.2,.7,.3,1), background .2s, color .2s, border-color .2s;
+  }
+  .mode-toggle:hover { transform: rotate(-8deg) scale(1.06); }
+  .mode-toggle.is-terminal {
+    background: rgba(125,213,140,.08); color: #7dd58c; border-color: #7dd58c;
+  }
+  .mode-toggle .tip {
+    position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%);
+    background: #2a2418; color: #f4ecd8; padding: 6px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 500; white-space: nowrap; letter-spacing: .03em;
+    opacity: 0; pointer-events: none; transition: opacity .15s;
+  }
+  .mode-toggle:hover .tip { opacity: 1; }
+  .mode-toggle.is-terminal .tip { background: #7dd58c; color: #0e1512; }
+
+  /* mode crossfade */
+  .mode-stage { position: relative; min-height: 100vh; }
+  .mode-layer { animation: fadeIn .35s ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="content.jsx"></script>
+<script type="text/babel" src="variants/notebook.jsx"></script>
+<script type="text/babel" src="variants/terminal.jsx"></script>
+<script type="text/babel">
+  const { NotebookSite, TerminalSite } = window;
+
+  function readModeFromHash() {
+    const h = (window.location.hash || '').replace('#', '').toLowerCase();
+    return h === 'terminal' ? 'terminal' : 'notebook';
+  }
+
+  function ModeToggle({ mode, onToggle }) {
+    const isTerminal = mode === 'terminal';
+    return (
+      <button
+        className={'mode-toggle' + (isTerminal ? ' is-terminal' : '')}
+        onClick={onToggle}
+        aria-label={isTerminal ? 'Switch to notebook view' : 'Switch to terminal view'}
+        title={isTerminal ? 'back to notebook' : 'view as terminal'}
+      >
+        <span aria-hidden="true">{isTerminal ? '✎' : '</>'}</span>
+        <span className="tip">{isTerminal ? '✎  back to the notebook' : '</>  view as terminal'}</span>
+      </button>
+    );
+  }
+
+  function App() {
+    const [mode, setMode] = React.useState(readModeFromHash);
+    React.useEffect(() => {
+      const onHash = () => setMode(readModeFromHash());
+      window.addEventListener('hashchange', onHash);
+      return () => window.removeEventListener('hashchange', onHash);
+    }, []);
+    React.useEffect(() => {
+      // keep URL in sync without polluting history
+      const target = mode === 'terminal' ? '#terminal' : '';
+      if (window.location.hash !== target) {
+        history.replaceState(null, '', window.location.pathname + window.location.search + target);
+      }
+      // body bg matches the active mode so overscroll doesn't flash the wrong color
+      document.body.style.background = mode === 'terminal' ? '#0e1512' : '#f4ecd8';
+    }, [mode]);
+
+    const toggle = () => setMode(m => m === 'terminal' ? 'notebook' : 'terminal');
+
+    return (
+      <div className="page-root">
+        <ModeToggle mode={mode} onToggle={toggle} />
+        <div className="mode-stage">
+          <div key={mode} className="mode-layer">
+            {mode === 'terminal' ? <TerminalSite /> : <NotebookSite />}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
