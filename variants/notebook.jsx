@@ -115,7 +115,7 @@ function NBHero() {
           fontSize: 88, lineHeight: 0.96, letterSpacing: '-0.02em',
           margin: '0 0 22px',
         }}>
-          Hi, I’m <em style={{ fontWeight: 400, color: nbPalette.accent }}>Greta.</em>
+          <span style={{ fontWeight: 400, color: nbPalette.accent }}>Greta.</span>
           <br/>
           <span className="nb-subhead" style={{ fontSize: 44, color: nbPalette.inkSoft, fontWeight: 300 }}>
             Ecologist who got <span style={{ textDecoration: 'line-through', color: nbPalette.muted }}>distracted</span> curious.
